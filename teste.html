@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>Nosso Mapa do Amor 💖</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 100vh;
+      width: 100%;
+      z-index: 1;
+    }
+    .leaflet-popup-content-wrapper {
+      border-radius: 12px;
+      max-width: 280px; /* popup mais estreito para mobile */
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+    audio {
+      width: 100%;
+      height: 40px;
+      border-radius: 8px;
+      outline: none;
+      -webkit-appearance: none;
+      margin-top: 0.5rem;
+    }
+    body, html {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-pink-50">
+  <header class="absolute top-0 left-0 w-full bg-pink-100 p-4 z-10 shadow-md">
+  <h1 class="text-center text-2xl md:text-3xl font-bold text-pink-800">💞 Mapa do Nosso Amor Infinito 💑</h1>
+  <p class="text-center text-pink-700 text-sm md:text-base">Toque nos corações e embarque em uma jornada mágica pelas nossas memórias mais queridas em realidade aumentada ✨</p>
+</header>
+
+
+  <div id="map" class="mt-24"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script>
+    // Inicia o mapa centralizado no Brasil
+    var map = L.map('map').setView([-14.2350, -51.9253], 4);
+
+    // Adiciona tiles do OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Ícone personalizado em formato de coração
+    var heartIcon = L.icon({
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/833/833472.png',
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
+    });
+
+    // Lista de lugares com links para as experiências RA, descrições e trilha sonora Spotify embed (mini player)
+    var lugares = [
+      {
+        nome: "Londrina",
+        coords: [-23.3107, -51.1627],
+        link: "https://ibb.co/SDyB9SdN",
+        descricao: "Lembranças doces da nossa passagem pela linda Londrina 🌸.",
+        musica: "https://open.spotify.com/embed/track/4gEFeIEORz8thfqMY7nKcb"
+      },
+     
+      {
+        nome: "Rio de Janeiro",
+        coords: [-22.9068, -43.1729],
+        link: "https://ibb.co/tTb8bCGb",
+        descricao: "A cidade maravilhosa e o nosso amor infinito sob o Cristo 🙏🌅.",
+        musica: "https://open.spotify.com/embed/track/4gEFeIEORz8thfqMY7nKcb"
+      },
+      {
+        nome: "São Paulo",
+        coords: [-23.5505, -46.6333],
+        link: "https://ibb.co/PZNDvjVG",
+        descricao: "No coração pulsante da metrópole, nossos passos juntos 🏙️❤️.",
+        musica: "https://open.spotify.com/embed/track/2XU0oxnq2qxCpomAAuJY8K"
+      },
+      {
+        nome: "Maringá",
+        coords: [-23.4202, -51.9331],
+        link: "https://ibb.co/MxfQK2M5",
+        descricao: "Entre jardins e avenidas, nosso amor floresceu mais forte 🌷💕.",
+        musica: "https://open.spotify.com/embed/track/0VjIjW4GlUZAMYd2vXMi3b"
+      },
+      {
+        nome: "Natal",
+        coords: [-6.2668, -35.0489],
+        link: "https://ibb.co/1tbXwkp9",
+        descricao: "Brisa do mar e nossos corações livres na praia de Pipa 🌊❤️.",
+        musica: "https://open.spotify.com/embed/track/3wNXqTMimmuTEj1iEPftC7"
+      }
+    ];
+
+    // Adiciona marcadores ao mapa
+    lugares.forEach(function(lugar) {
+      L.marker(lugar.coords, { icon: heartIcon }).addTo(map)
+        .bindPopup(`
+          <div class='text-center max-w-xs'>
+            <h2 class='text-lg font-semibold text-pink-700 mb-1'>${lugar.nome}</h2>
+            <p class='text-sm text-pink-800 italic mb-2'>"${lugar.descricao}"</p>
+            <a href="${lugar.link}" target="_blank" class="inline-block mt-2 px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition">
+              Ver em RA ✨
+            </a>
+           <iframe 
+  style="
+    margin-top: 1rem; 
+    border-radius: 16px; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12); 
+    border: none; 
+    width: 100%; 
+    height: 80px; 
+    transition: box-shadow 0.3s ease;
+  " 
+  src="${lugar.musica}" 
+  frameborder="0" 
+  allowtransparency="true" 
+  allow="encrypted-media" 
+  loading="lazy"
+  onmouseover="this.style.boxShadow='0 8px 20px rgba(0,0,0,0.25)';" 
+  onmouseout="this.style.boxShadow='0 4px 10px rgba(0,0,0,0.12)';"
+></iframe>
+
+          </div>
+        `);
+    });
+  </script>
+</body>
+</html>
